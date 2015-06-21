@@ -114,7 +114,6 @@ The complexity is now concentrated in the parent component. We modify the People
 
 ```js
 var People = React.createClass({
-
     onClick: function (name) {
     console.log("Hello " + name);
 },
@@ -193,6 +192,7 @@ var boundFunction = this.onClick.bind(this, person);
 });
 ```
 
+
 Another alternative to using bind is to save a copy of the current this value to another variable like that. If we do that, the second bind is no longer necessary. we still need the first bind however, to make sure that we are binding the first name parameter.
 
 
@@ -267,3 +267,4 @@ The output is
 Hello John
 Hola Mary
 ```
+

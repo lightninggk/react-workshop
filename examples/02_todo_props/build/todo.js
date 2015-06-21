@@ -56,20 +56,15 @@ var Todo = React.createClass({displayName: "Todo",
 var Todos = React.createClass({displayName: "Todos",
 
     render: function () {
-        var tasks = ["do this", "do this", "foo bar", "do that", "buy tickets"];
-
         return (
         React.createElement("section", {id: "main", style: {display: 'block'}}, 
           React.createElement("input", {id: "toggle-all", type: "checkbox"}), 
           React.createElement("label", {htmlFor: "toggle-all"}, "Mark all as complete"), 
             React.createElement("ul", {id: "todo-list"}, 
-            tasks.slice().sort().map(function (task, index) {
+            this.props.items.slice().sort().map(function (task, index) {
                 return React.createElement(Todo, {task: task, key: "foo" + index});
             })
-            ), 
-            tasks.map(function (task, index) {
-                return React.createElement("div", {key: index}, task);
-            })
+            )
         ));
 
     }
@@ -81,13 +76,43 @@ var App = React.createClass({displayName: "App",
   render: function() {
     return (
         React.createElement("section", {id: "todoapp"}, 
-        React.createElement(TodoHeader, null), 
-        React.createElement(Todos, null), 
-        React.createElement(TodoFooter, null)
+            React.createElement(People, null)
       )
     );
   }
 });
+//
+//var App = React.createClass({
+//  render: function() {
+//    return (
+//        <section id="todoapp">
+//            <TodoHeader/>
+//            <Todos items={["do this", "do this", "foo bar", "do that", "buy tickets"]}/>
+//            <TodoFooter/>
+//            <People/>
+//      </section>
+//    );
+//  }
+//});
 
+var HelloWorld = React.createClass({displayName: "HelloWorld",
+
+    render: function () {
+        return React.createElement("div", {onClick: this.props.onClick}, "Hello " + this.props.name);
+    }
+});
+
+
+var People = React.createClass({displayName: "People",
+    onClick: function (name) {
+        console.log("Hello " + name);
+    },
+
+    render: function () {
+        return React.createElement("div", null, ["John", "Mary", "Susan"].map(function (person, idx) {
+            return React.createElement(HelloWorld, {onClick: this.onClick.bind(this, person), name: person, key: idx});
+        }.bind(this)));
+    }
+});
 
 React.render(React.createElement(App, null), document.getElementById('app'))
